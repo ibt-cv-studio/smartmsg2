@@ -1,0 +1,12 @@
+export const CATEGORIES = [
+  { key:'Birthday',        icon:'🎂', bg:'#fff5e6', color:'amber',  label:'Birthday',         description:'Wish happy birthday',      defaultRepeat:'yearly',  template:'Happy birthday {name}! Wishing you a wonderful day filled with joy and blessings. You deserve all the best!' },
+  { key:'Sabbath',         icon:'✝️', bg:'#f0f4ff', color:'blue',   label:'Happy Sabbath',    description:'Weekly Sabbath blessing',   defaultRepeat:'weekly',  template:'Happy Sabbath {name}! May this holy day bring you peace, rest and spiritual renewal. God bless you.' },
+  { key:'Daily Word',      icon:'🌅', bg:'#e6fff9', color:'green',  label:'Daily Word',       description:'Morning motivation',        defaultRepeat:'daily',   template:'Good morning {name}! Have a wonderful and productive day. You are capable of great things!' },
+  { key:'Anniversary',     icon:'💍', bg:'#fff0f6', color:'pink',   label:'Anniversary',      description:'Celebrate anniversaries',   defaultRepeat:'yearly',  template:'Happy anniversary {name}! Wishing you many more years of love, happiness and beautiful memories together.' },
+  { key:'Get Well',        icon:'💊', bg:'#f0fff4', color:'green',  label:'Get Well',         description:'Comfort the sick',          defaultRepeat:'once',    template:'Hi {name}, I am thinking of you and wishing you a quick and full recovery. Take care and get well soon!' },
+  { key:'Congratulations', icon:'🏆', bg:'#fffce6', color:'amber',  label:'Congratulations',  description:'Celebrate achievements',    defaultRepeat:'once',    template:'Congratulations {name}! This is a wonderful achievement and you truly deserve it. Very proud of you!' },
+  { key:'New Year',        icon:'🎆', bg:'#f5f0ff', color:'purple', label:'New Year',         description:'New Year wishes',           defaultRepeat:'yearly',  template:'Happy New Year {name}! May this new year bring you abundant blessings, good health, and great success!' },
+  { key:'Good Morning',    icon:'☀️', bg:'#fffce6', color:'amber',  label:'Good Morning',     description:'Daily morning greeting',    defaultRepeat:'daily',   template:'Good morning {name}! Rise and shine. Today is a new opportunity. Make it count!' },
+  { key:'Other',           icon:'💬', bg:'#f7f7f7', color:'gray',   label:'Custom message',   description:'Write your own',            defaultRepeat:'once',    template:'' },
+];
+export const categoryMeta = Object.fromEntries(CATEGORIES.map(c => [c.key, c]));
