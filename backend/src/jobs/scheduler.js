@@ -1,6 +1,6 @@
 const cron = require('node-cron');
 const pool = require('../config/db');
-const { sendSMS } = require('../services/smsService');
+const { sendWhatsApp, getStatus } = require('../services/whatsappService');
 
 async function getDueMessages() {
   const { rows } = await pool.query(`
@@ -26,14 +26,26 @@ async function getDueMessages() {
 
 async function processMessage(msg) {
   console.log(`📤 Sending "${msg.category}" to ${msg.receiver_phone}`);
-  const result = await sendSMS(msg.receiver_phone, msg.message_text);
+
+  const status = getStatus();
+  let result;
+
+  if (status.isReady) {
+    result = await sendWhatsApp(msg.receiver_phone, msg.message_text);
+  } else {
+    result = { success: false, error: 'WhatsApp not connected' };
+  }
+
   await pool.query(
     `INSERT INTO send_logs (message_id, user_id, status, error_msg) VALUES ($1,$2,$3,$4)`,
     [msg.id, msg.user_id, result.success ? 'sent' : 'failed', result.error || null]
   );
-  if (msg.repeat_type === 'once' && result.success)
+
+  if (msg.repeat_type === 'once' && result.success) {
     await pool.query(`UPDATE messages SET is_active = FALSE WHERE id = $1`, [msg.id]);
-  console.log(result.success ? `  ✅ Sent` : `  ❌ Failed: ${result.error}`);
+  }
+
+  console.log(result.success ? `  ✅ Sent via WhatsApp` : `  ❌ Failed: ${result.error}`);
 }
 
 function startScheduler() {
@@ -47,4 +59,5 @@ function startScheduler() {
     } catch (err) { console.error('Scheduler error:', err.message); }
   });
 }
+
 module.exports = { startScheduler };
